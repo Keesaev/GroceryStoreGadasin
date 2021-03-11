@@ -43,7 +43,7 @@ namespace GroceryStore
                 endpoints.MapControllerRoute("default",
                     "{controller=Category}/{action=List}");
                 endpoints.MapControllerRoute("products",
-                    "{controller=Product}/{action=List}/{categoryId}");
+                    "{controller=Product}/{action=List}/{categoryName}");
             });
         }
     }
