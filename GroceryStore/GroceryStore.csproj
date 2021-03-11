@@ -42,9 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Components\" />
     <Folder Include="Migrations\" />
-    <Folder Include="Views\Shared\Components\" />
     <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\js\" />
     <Folder Include="wwwroot\lib\" />

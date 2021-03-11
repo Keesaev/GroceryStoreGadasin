@@ -17,7 +17,7 @@ namespace GroceryStore.Controllers
 
         public ViewResult List(int categoryId)
             => View(repository.Categories
-                .OrderBy(c => c.Id)
+                .OrderBy(c => c)
             );
     }
 }

@@ -6,14 +6,12 @@
         <title>GroceryStore</title>
     </head>
     <body>
-        <div class="navbar navbar-inverse bg-inverse" role="navigation">
-            <h2>
-                @Html.ActionLink("GROCERY STORE", "List", "Category")
-            </h2>
+        <div class="navbar navbar-dark bg-dark" role="navigation">
+            <a class="navbar-brand" href="/">GROCERY STORE</a>
         </div>
-        <div class="row m-1 р-1">
+        <div class="row m-1 р-1 w-75 d-flex justify-content-center">
             <div id="categories" class="col-3">
-                Put something useful here later
+                @await Component.InvokeAsync("NavigationMenu")
             </div>
             <div class="col-9">
                 @RenderBody()
