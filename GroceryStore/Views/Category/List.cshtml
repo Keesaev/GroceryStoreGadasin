@@ -1,8 +1,13 @@
 ﻿@model IEnumerable<Category>
+<h2>
+    Категории:
+</h2>
 @foreach (var c in Model)
 {
-    <div>
-        <h3>@c.Name</h3>
+    <div class="card card-outline-primary m-1 p-1">
+        <h3>
+            @Html.ActionLink(@c.Name, "List", "Product", new { categoryId = c.Id })
+        </h3>
         @c.Description
     </div>
 }
