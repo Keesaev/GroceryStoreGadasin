@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace GroceryStore.Models
 {
-    public interface IProductRepository
+    public interface IGroceryRepository
     {
         IQueryable<Product> Products { get; }
+        IQueryable<Category> Categories { get; }
     }
 }

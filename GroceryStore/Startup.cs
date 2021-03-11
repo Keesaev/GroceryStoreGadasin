@@ -26,7 +26,7 @@ namespace GroceryStore
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(
                 Configuration["Data:GroceryStoreProducts:ConnectionString"]));
-            services.AddTransient<IProductRepository, EFProductRepository>();
+            services.AddTransient<IGroceryRepository, EFGroceryRepository>();
             services.AddMvc();
         }
 
@@ -41,9 +41,8 @@ namespace GroceryStore
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute("default",
-                    "{controller=Product}/{action=List}/{id?}");
+                    "{controller=Category}/{action=List}/{id?}");
             });
-            //SeedData.EnsurePopulated(app);
         }
     }
 }

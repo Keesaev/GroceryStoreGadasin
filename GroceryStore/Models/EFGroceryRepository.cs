@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 
 namespace GroceryStore.Models
 {
-    public class EFProductRepository : IProductRepository
+    public class EFGroceryRepository : IGroceryRepository
     {
         private ApplicationDbContext context;
-        public EFProductRepository(ApplicationDbContext ctx)
+        public EFGroceryRepository(ApplicationDbContext ctx)
         {
             context = ctx;
         }
         public IQueryable<Product> Products => context.Products;
+        public IQueryable<Category> Categories => context.Categories;
     }
 }

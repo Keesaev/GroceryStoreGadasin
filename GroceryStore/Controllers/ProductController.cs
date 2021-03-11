@@ -10,8 +10,8 @@ namespace GroceryStore.Controllers
 {
     public class ProductController : Controller
     {
-        private IProductRepository repository;
-        public ProductController(IProductRepository repo)
+        private IGroceryRepository repository;
+        public ProductController(IGroceryRepository repo)
         {
             repository = repo;
         }
