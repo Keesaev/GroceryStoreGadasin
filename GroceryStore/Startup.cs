@@ -28,6 +28,8 @@ namespace GroceryStore
                 Configuration["Data:GroceryStoreProducts:ConnectionString"]));
             services.AddTransient<IGroceryRepository, EFGroceryRepository>();
             services.AddMvc();
+            services.AddMemoryCache();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,6 +39,7 @@ namespace GroceryStore
             app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseRouting();
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
