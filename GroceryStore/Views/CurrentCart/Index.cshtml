@@ -20,6 +20,18 @@
                 <td class="text-right">
                     @((line.Quantity * line.Product.Price).ToString("c"))
                 </td>
+                <td>
+                    <form asp-action="RemoveFromCurrentCart"
+                          method="post">
+                        <input type="hidden" name="productId"
+                               value="@line.Product.Id" />
+                        <input type="hidden" name="returnUrl"
+                               value="@Model.ReturnUrl" />
+                        <button type="submit" class="btn btn-sm btn-danger">
+                            Удалить
+                        </button>
+                    </form>
+                </td>
             </tr>
         }
     </tbody>
@@ -35,4 +47,8 @@
 
 <div class="text-center">
     <a class="btn btn-primary" href="@Model.ReturnUrl">Продолжить покупки</a>
+    <a class="btn btn-primary" asp-action="Checkout"
+       asp-controller="CurrentOrder">
+        Оплатить
+    </a>
 </div>

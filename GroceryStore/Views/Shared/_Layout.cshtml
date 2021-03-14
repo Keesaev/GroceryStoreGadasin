@@ -3,11 +3,21 @@
     <head>
         <meta name="viewport" content="width=device-width" />
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
         <title>GroceryStore</title>
     </head>
     <body>
         <div class="navbar navbar-dark bg-dark" role="navigation">
-            <a class="navbar-brand" href="/">GROCERY STORE</a>
+            <div class="row">
+                <a class="col navbar-brand" href="/">GROCERY STORE</a>
+                <div class="col-4 text-right">
+                    <a class="btn btn-sm btn-secondary navbar-btn"
+                       asp-controller="CurrentCart" asp-action="Index"
+                       asp-route-returnurl="@ViewContext.HttpContext.Request.PathAndQuery()">
+                        <i class="fa fa-shopping-cart"></i>
+                    </a>
+                </div>
+            </div>
         </div>
         <div class="row m-1 р-1 w-75 d-flex justify-content-center">
             <div id="categories" class="col-3">

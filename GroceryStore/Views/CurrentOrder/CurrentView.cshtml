@@ -1,0 +1,23 @@
+﻿@model CurrentOrder
+
+<h2>Оформление заказа</h2>
+<p>Заполните приведенные ниже поля</p>
+
+<form asp-action="Checkout" method="post">
+    <h3>Кому доставить</h3>
+    <div class="form-group">
+        <label>Имя:</label><input asp-for="Name" class="form-control" />
+    </div>
+    <h3>Адрес</h3>
+    <div class="form-group">
+        <input asp-for="Address" class="form-control" />
+    </div>
+    <h3>Номер телефона</h3>
+    <div class="form-group">
+        <input asp-for="Number" class="form-control" />
+    </div>
+    <h3>Способ оплаты</h3>
+    <div class="form-group">
+        <input asp-for="Payment" class="form-control" />
+    </div>
+</form>
