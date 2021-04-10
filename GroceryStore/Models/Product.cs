@@ -14,11 +14,8 @@ namespace GroceryStore.Models
         public int Id { get; set; }
         public Category Category { get; set; }
         public int CategoryId { get; set; }
-        public Image Image { get; set; }
-        public int ImageId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public float Price { get; set; }
-        public bool Stock { get; set; }
+        public double Price { get; set; }
     }
 }

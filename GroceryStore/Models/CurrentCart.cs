@@ -31,7 +31,7 @@ namespace GroceryStore.Models
         public virtual void RemoveLine(Product product) =>
             lineCollection.RemoveAll(l => l.Product.Id == product.Id);
 
-        public virtual float ComputeTotalValue() =>
+        public virtual double ComputeTotalValue() =>
             lineCollection.Sum(e => e.Product.Price * e.Quantity);
 
         public virtual void Clear() => lineCollection.Clear();

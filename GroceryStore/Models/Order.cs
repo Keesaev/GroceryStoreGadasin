@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,13 +10,17 @@ namespace GroceryStore.Models
 {
     public class Order
     {
-        [Key]
+        [BindNever]
         public int Id { get; set; }
-        public Cart Cart { get; set; }
-        public int CartId { get; set; }
-        public Delivery Delivery { get; set; }
-        public int DeliveryId { get; set; }
-        public double Price { get; set; }
+        [BindNever]
+        public ICollection<CartLine> Lines { get; set; }
+        [Required(ErrorMessage = "Пожалуйста, введите имя")]
+        [BindNever]
+        public bool Shipped { get; set; }
+        public string Name { get; set; }
+        [Required(ErrorMessage = "Пожалуйста, введите адрес")]
+        public string Address { get; set; }
+        [Required(ErrorMessage = "Пожалуйста, выберите способ оплаты")]
         public int Payment { get; set; }
     }
 }

@@ -1,7 +1,8 @@
-﻿@model CurrentOrder
+﻿@model Order
 
 <h2>Оформление заказа</h2>
 <p>Заполните приведенные ниже поля</p>
+<div asp-validation-summary="All" class="text-danger"></div>
 
 <form asp-action="Checkout" method="post">
     <h3>Кому доставить</h3>
@@ -11,10 +12,6 @@
     <h3>Адрес</h3>
     <div class="form-group">
         <input asp-for="Address" class="form-control" />
-    </div>
-    <h3>Номер телефона</h3>
-    <div class="form-group">
-        <input asp-for="Number" class="form-control" />
     </div>
     <h3>Способ оплаты</h3>
     <div class="from-group">
@@ -28,6 +25,6 @@
         </label>
     </div>
     <div class="test-center">
-        <input class="btn btn-primary" type="submit" value="Complete Order"/>
+        <input class="btn btn-primary" type="submit" value="Оформить заказ"/>
     </div>
 </form>

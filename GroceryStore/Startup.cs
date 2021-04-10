@@ -27,6 +27,8 @@ namespace GroceryStore
             options.UseSqlServer(
                 Configuration["Data:GroceryStoreProducts:ConnectionString"]));
             services.AddTransient<IGroceryRepository, EFGroceryRepository>();
+            services.AddScoped<CurrentCart>(sp => SessionCart.GetCart(sp));
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddMvc();
             services.AddMemoryCache();
             services.AddSession();
