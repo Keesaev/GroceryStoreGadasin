@@ -16,9 +16,10 @@ namespace GroceryStore.Components
         }
         public IViewComponentResult Invoke()
         {
-            return View(repository.Categories
+            return View(repository.Products
                 .OrderBy(x => x)
-                .Select(x => x.Name));
+                .Select(x => x.Category)
+                .Distinct());
         }
     }
 }

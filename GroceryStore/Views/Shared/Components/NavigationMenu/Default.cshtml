@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<string>
 @foreach (string category in Model)
 {
-     @Html.ActionLink(@category, "List", "Product", new { categoryName = @category }, new { @class="btn btn-block btn-secondary btn-light"})
+     @Html.ActionLink(@category, "List", "Product", new { category = @category }, new { @class="btn btn-block btn-secondary btn-light"})
 }

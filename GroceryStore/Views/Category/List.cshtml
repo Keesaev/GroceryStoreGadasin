@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Category>
+﻿@model IEnumerable<string>
 <h4>
     Категории:
 </h4>
@@ -6,8 +6,7 @@
 {
     <div class="card card-outline-primary m-1 p-1">
         <h5>
-            @Html.ActionLink(@c.Name, "List", "Product", new { categoryName = c.Name })
+            @Html.ActionLink(c, "List", "Product", new { category = c})
         </h5>
-        @c.Description
     </div>
 }

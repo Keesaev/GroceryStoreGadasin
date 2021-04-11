@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GroceryStore.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GroceryStore.Controllers
 {
@@ -16,13 +17,15 @@ namespace GroceryStore.Controllers
             repository = repoServise;
             cart = cartService;
         }
+        [Authorize]
         public ViewResult List() =>
             View(repository.Orders.Where(o => !o.Shipped));
         [HttpPost]
-        public IActionResult MarkShipped(int orderId)
+        [Authorize]
+        public IActionResult MarkShipped(int Id)
         {
             Order order = repository.Orders
-                .FirstOrDefault(o => o.Id == orderId);
+                .FirstOrDefault(o => o.Id == Id);
             if(order != null)
             {
                 order.Shipped = true;

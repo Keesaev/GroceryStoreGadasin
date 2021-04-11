@@ -8,6 +8,6 @@ namespace GroceryStore.Models.ViewModels
     public class ProductListViewModel
     {
         public IEnumerable<Product> Products { get; set; }
-        public string CurrentCategoryName { get; set; }
+        public string CurrentCategory { get; set; }
     }
 }

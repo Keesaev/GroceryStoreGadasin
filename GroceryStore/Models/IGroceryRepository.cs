@@ -8,8 +8,9 @@ namespace GroceryStore.Models
     public interface IGroceryRepository
     {
         IQueryable<Product> Products { get; }
-        IQueryable<Category> Categories { get; }
         IQueryable<Order> Orders { get; }
         void SaveOrder(Order order);
+        void SaveProduct(Product product);
+        Product DeleteProduct(int Id);
     }
 }

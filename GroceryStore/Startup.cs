@@ -11,6 +11,7 @@ using GroceryStore.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace GroceryStore
 {
@@ -26,6 +27,12 @@ namespace GroceryStore
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(
                 Configuration["Data:GroceryStoreProducts:ConnectionString"]));
+            services.AddDbContext<AppIdentityDbContext>(options =>
+            options.UseSqlServer(
+                Configuration["Data:GroceryStoreIdentity:ConnectionString"]));
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppIdentityDbContext>()
+                .AddDefaultTokenProviders();
             services.AddTransient<IGroceryRepository, EFGroceryRepository>();
             services.AddScoped<CurrentCart>(sp => SessionCart.GetCart(sp));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -37,12 +44,13 @@ namespace GroceryStore
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseDeveloperExceptionPage();
             app.UseStatusCodePages();
             app.UseStaticFiles();
-            app.UseRouting();
             app.UseSession();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute("default",
@@ -50,6 +58,7 @@ namespace GroceryStore
                 endpoints.MapControllerRoute("products",
                     "{controller=Product}/{action=List}/{categoryName}");
             });
+            IdentitySeedData.EnsurePopulated(app);
         }
     }
 }

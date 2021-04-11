@@ -1,5 +1,5 @@
 ﻿@model ProductListViewModel
-<h2>@Model.CurrentCategoryName:</h2>
+<h2>@Model.CurrentCategory:</h2>
 @foreach (var p in Model.Products)
 {
     @Html.Partial("ProductSummary", p)

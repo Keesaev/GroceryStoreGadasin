@@ -15,9 +15,11 @@ namespace GroceryStore.Controllers
             repository = repo;
         }
 
-        public ViewResult List(int categoryId)
-            => View(repository.Categories
+        public ViewResult List(int category)
+            => View(repository.Products
                 .OrderBy(c => c)
+                .Select(p => p.Category)
+                .Distinct()
             );
     }
 }

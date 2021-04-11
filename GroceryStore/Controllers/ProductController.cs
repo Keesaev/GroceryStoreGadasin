@@ -16,15 +16,14 @@ namespace GroceryStore.Controllers
             repository = repo;
         }
 
-        public ViewResult List(string categoryName)
+        public ViewResult List(string category)
             => View(new ProductListViewModel
             {
-                
                 Products = repository.Products
                 .OrderBy(p => p.Id)
-                .Where(p => categoryName == null ||
-                    p.CategoryId == (repository.Categories.Single(c=>c.Name == categoryName)).Id),
-                CurrentCategoryName = categoryName,
+                .Where(p => category == null ||
+                    p.Category == category),
+                CurrentCategory = category
             });
     }
 }
