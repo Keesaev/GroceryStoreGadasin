@@ -8,9 +8,10 @@ using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
 using GroceryStore.Infrastructure;
 using GroceryStore.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GroceryStore.Controllers
-{
+{   [Authorize]
     public class CurrentCartController : Controller
     {
         private IGroceryRepository repository;

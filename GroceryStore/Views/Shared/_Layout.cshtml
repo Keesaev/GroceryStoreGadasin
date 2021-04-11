@@ -9,14 +9,24 @@
     <body>
         <div class="navbar navbar-dark bg-dark" role="navigation">
             <div class="row">
-                <a class="col navbar-brand" href="/">ОБЖОРИК</a>
-                <div class="col-4 text-right">
+                <a class="col-sm navbar-brand" href="/">ОБЖОРИК</a>
+                <div class="text-right float-right col-sm">
                     <a class="btn btn-sm btn-secondary navbar-btn"
                        asp-controller="CurrentCart" asp-action="Index"
                        asp-route-returnurl="@ViewContext.HttpContext.Request.PathAndQuery()">
                         <i class="fa fa-shopping-cart"></i>
                     </a>
                 </div>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a class="btn btn-sm btn-primary btn-light col-sm"
+                       asp-action="Logout" asp-controller="Account">Выйти</a>
+                }
+                else
+                {
+                    <a class="btn btn-sm btn-primary btn-light col-sm"
+                       asp-action="Login" asp-controller="Account">Войти</a>
+                }
             </div>
         </div>
         <div class="row m-1 р-1 w-75 d-flex justify-content-center">

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GroceryStore.Models.ViewModels
 {
-    public class LoginModel
+    public class RegisterModel
     {
         [Required]
         public string Login { get; set; }

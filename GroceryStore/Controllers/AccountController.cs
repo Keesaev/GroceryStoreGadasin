@@ -1,7 +1,12 @@
-﻿using GroceryStore.Models.ViewModels;
+﻿using GroceryStore.Models;
+using GroceryStore.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,22 +16,45 @@ namespace GroceryStore.Controllers
 {
     public class AccountController : Controller
     {
-        private UserManager<IdentityUser> userManager;
-        private SignInManager<IdentityUser> signInManager;
+        private IGroceryRepository repository;
 
-        public AccountController(UserManager<IdentityUser> userMgr,
-            SignInManager<IdentityUser> signInMgr)
+        public AccountController(IGroceryRepository repo)
         {
-            userManager = userMgr;
-            signInManager = signInMgr;
+            repository = repo;
         }
+
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegisterModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                User user = await repository.Users
+                    .FirstOrDefaultAsync(u => u.Login == model.Login);
+                if(user == null)
+                {
+                    user = new User { Login = model.Login, Password = model.Password, Role = "user" };
+                    repository.SaveUser(user);
+                    await Authenticate(user);
+                }
+                return Redirect("/");
+            }
+            else
+                ModelState.AddModelError("", "Некорректные логин или пароль");
+            return View(model);
+        }
+
+        [HttpGet]
         [AllowAnonymous]
         public ViewResult Login(string returnUrl)
         {
-            return View(new LoginModel
-            {
-                ReturnUrl = returnUrl
-            });
+            return View();
         }
         [HttpPost]
         [AllowAnonymous]
@@ -35,24 +63,38 @@ namespace GroceryStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                IdentityUser user = await userManager.FindByNameAsync(loginModel.Name);
+                User user = await repository.Users
+                    .FirstOrDefaultAsync(u => u.Login == loginModel.Login 
+                    && u.Password == loginModel.Password);
                 if(user != null)
                 {
-                    await signInManager.SignOutAsync();
-                    if((await signInManager.PasswordSignInAsync(user,
-                        loginModel.Password, false, false)).Succeeded)
-                    {
-                        return Redirect(loginModel?.ReturnUrl ?? "Admin/Index");
-                    }
+                    await Authenticate(user);
+                    if (user.Role == "admin")
+                        return Redirect("/Admin/Index");
+                    else
+                        return Redirect("/");
                 }
             }
             ModelState.AddModelError("", "Неверный логин или пароль");
             return View(loginModel);
         }
+
         public async Task<RedirectResult> Logout(string returnUrl = "/")
         {
-            await signInManager.SignOutAsync();
+            await HttpContext.SignOutAsync("Cookies");
             return Redirect(returnUrl);
+        }
+
+        public async Task Authenticate(User user)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role)
+            };
+            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,
+                ClaimsIdentity.DefaultRoleClaimType);
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
     }
 }

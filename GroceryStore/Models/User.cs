@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GroceryStore.Models.ViewModels
+namespace GroceryStore.Models
 {
-    public class LoginModel
+    public class User
     {
-        [Required]
+        public int Id { get; set; }
         public string Login { get; set; }
-        [Required]
-        [UIHint("password")]
         public string Password { get; set; }
+        public string Role { get; set; }
     }
 }

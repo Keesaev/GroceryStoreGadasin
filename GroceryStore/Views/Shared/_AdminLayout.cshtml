@@ -10,10 +10,12 @@
         <div class="col">
             <h4>@ViewBag.Title</h4>
         </div>
-        <div class="col-2">
-            <a class="btn btn-sm btn-primary"
-               asp-action="Logout" asp-controller="Account">Выйти</a>
-        </div>
+        <a class="btn btn-sm btn-primary"
+           asp-action="List" asp-controller="Order">Заказы</a>
+        <a class="btn btn-sm btn-primary"
+           asp-action="Index" asp-controller="Admin">Товары</a>
+        <a class="btn btn-sm btn-primary"
+           asp-action="Logout" asp-controller="Account">Выйти</a>
     </div>
     @if (TempData["message"] != null)
     {

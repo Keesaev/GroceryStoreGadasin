@@ -57,5 +57,11 @@ namespace GroceryStore.Models
             }
             return dbEntry;
         }
+        IQueryable<User> IGroceryRepository.Users => context.Users;
+        public void SaveUser(User user)
+        {
+            context.Users.Add(user);
+            context.SaveChanges();
+        }
     }
 }

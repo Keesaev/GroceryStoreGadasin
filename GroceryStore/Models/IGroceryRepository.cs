@@ -9,8 +9,10 @@ namespace GroceryStore.Models
     {
         IQueryable<Product> Products { get; }
         IQueryable<Order> Orders { get; }
+        IQueryable<User> Users { get; }
         void SaveOrder(Order order);
         void SaveProduct(Product product);
+        void SaveUser(User user);
         Product DeleteProduct(int Id);
     }
 }

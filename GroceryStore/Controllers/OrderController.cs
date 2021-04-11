@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace GroceryStore.Controllers
 {
+    [Authorize]
     public class OrderController : Controller
     {
         private IGroceryRepository repository;
@@ -17,11 +18,11 @@ namespace GroceryStore.Controllers
             repository = repoServise;
             cart = cartService;
         }
-        [Authorize]
+        [Authorize(Roles = "admin")]
         public ViewResult List() =>
             View(repository.Orders.Where(o => !o.Shipped));
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         public IActionResult MarkShipped(int Id)
         {
             Order order = repository.Orders

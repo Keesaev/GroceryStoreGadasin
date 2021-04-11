@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace GroceryStore
 {
@@ -27,12 +28,12 @@ namespace GroceryStore
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(
                 Configuration["Data:GroceryStoreProducts:ConnectionString"]));
-            services.AddDbContext<AppIdentityDbContext>(options =>
-            options.UseSqlServer(
-                Configuration["Data:GroceryStoreIdentity:ConnectionString"]));
-            services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<AppIdentityDbContext>()
-                .AddDefaultTokenProviders();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                { 
+                options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                });
             services.AddTransient<IGroceryRepository, EFGroceryRepository>();
             services.AddScoped<CurrentCart>(sp => SessionCart.GetCart(sp));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -58,7 +59,6 @@ namespace GroceryStore
                 endpoints.MapControllerRoute("products",
                     "{controller=Product}/{action=List}/{categoryName}");
             });
-            IdentitySeedData.EnsurePopulated(app);
         }
     }
 }
