@@ -27,7 +27,7 @@ namespace GroceryStore
         {
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(
-                Configuration["Data:GroceryStoreProducts:ConnectionString"]));
+                Configuration.GetConnectionString("GroceryStoreDB")));
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 { 
@@ -45,11 +45,18 @@ namespace GroceryStore
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseStatusCodePages();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+            }
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseDeveloperExceptionPage();
-            app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseSession();
             app.UseEndpoints(endpoints =>
